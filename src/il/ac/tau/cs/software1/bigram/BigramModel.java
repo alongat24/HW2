@@ -95,15 +95,15 @@ public class BigramModel {
                     wordCount += 1 ;
         }
     }
+}
         reader.close();
         String[] briefVocabulary = new String[wordCount] ;
         for (int i = 0 ; i<wordCount ; i++) {
             briefVocabulary[i] = vocabulary[i];
         }    
-        }
         return briefVocabulary;
     }
-
+    
     /*
      * @post: mVocabulary = prev(mVocabulary)
      * @post: mBigramCounts = prev(mBigramCounts)

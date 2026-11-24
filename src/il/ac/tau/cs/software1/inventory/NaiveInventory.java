@@ -7,7 +7,6 @@ public class NaiveInventory implements Inventory {
 
 	private static final int INITIAL_CAPACITY = 100;
 
-	// TODO: add the fields:
 	private Collectible[] items;
 	private int count;
 

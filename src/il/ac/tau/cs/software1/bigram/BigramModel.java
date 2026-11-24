@@ -158,13 +158,37 @@ public class BigramModel {
     }
     countWriter.close();  
 }  
-
-
     /*
      * @pre: fileName is a legal file path
      */
-    public void loadModel(String fileName) throws IOException { // Question 4
-        // TODO: implement
+    public void loadModel(String fileName) throws IOException {
+     // mVocabulary 
+        BufferedReader vocabReader = new BufferedReader (new FileReader(fileName + VOC_FILE_SUFFIX));
+
+        String lineVocab = vocabReader.readLine() ;
+        String[] tokensVocab = lineVocab.split("\\s+");
+        String[] vocabulary = new String [Integer.parseInt(tokensVocab[0])];
+
+        while ((lineVocab = vocabReader.readLine()) != null) {
+            String[] newTokensVocab = lineVocab.split(",",2);
+            vocabulary[Integer.parseInt(newTokensVocab[0])] = (newTokensVocab[1]);
+        }
+        vocabReader.close();
+        mVocabulary = vocabulary ;
+
+        // mBigramCounts    
+        BufferedReader countReader = new BufferedReader (new FileReader(fileName + COUNTS_FILE_SUFFIX));
+
+        String lineCount;
+        int[][] matrix = new int [mVocabulary.length][mVocabulary.length];
+
+        while ((lineCount = countReader.readLine()) != null) {
+            String[] tokensCount = lineCount.split("[,:]");
+            matrix[Integer.parseInt(tokensCount[0])][Integer.parseInt(tokensCount[1])] = (Integer.parseInt(tokensCount[2]));
+        }
+        countReader.close();
+        mBigramCounts = matrix ;
+
     }
 
     /*

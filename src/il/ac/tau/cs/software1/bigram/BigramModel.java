@@ -1,6 +1,5 @@
 package il.ac.tau.cs.software1.bigram;
 
-import java.io.IOException;
 import java.util.Locale;
 import java.io.*;
 
@@ -109,8 +108,27 @@ public class BigramModel {
      * @post: mBigramCounts = prev(mBigramCounts)
      */
     public int[][] buildCountsArray(String fileName, String[] vocabulary) throws IOException { // Question 2
-        // TODO: implement
-        return null;
+        BufferedReader reader = new BufferedReader (new FileReader(fileName));
+
+        int[][] matrix = new int [vocabulary.length][vocabulary.length] ;
+        String line ;
+        while ((line = reader.readLine()) != null){
+            String[] tokens = line.split("\\s+");
+            for (int i=0 ; i<tokens.length - 1 ; i++) {
+                String firstWord = normalizeWord (tokens[i]) ;
+                String secondWord = normalizeWord (tokens[i+1]) ;
+                int firstWordIndex = findIndex (vocabulary,firstWord) ;
+                int secondWordIndex = findIndex (vocabulary,secondWord) ;
+
+                 if (firstWord != null && firstWordIndex != ELEMENT_NOT_FOUND 
+                    && secondWord != null && secondWordIndex != ELEMENT_NOT_FOUND) {
+                       matrix[firstWordIndex][secondWordIndex] += 1 ;
+                    }
+            }
+        }
+        reader.close();
+
+        return matrix;
     }
 
     /*
